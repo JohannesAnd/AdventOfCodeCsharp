@@ -3,25 +3,25 @@ using System.Linq;
 
 namespace AdventOfCode2021
 {
-    public enum DIRECTION
+    public enum Direction
     {
-        UP,
-        DOWN,
-        FORWARD
+        Up,
+        Down,
+        Forward
     }
 
     public class Instruction
     {
-        public readonly DIRECTION Direction;
+        public readonly Direction Direction;
         public readonly int Value;
 
         public Instruction(string input)
         {
-            var map = new Dictionary<string, DIRECTION>
+            var map = new Dictionary<string, Direction>
             {
-                {"forward", DIRECTION.FORWARD},
-                {"up", DIRECTION.UP},
-                {"down", DIRECTION.DOWN}
+                {"forward", Direction.Forward},
+                {"up", Direction.Up},
+                {"down", Direction.Down}
             };
             var inputSplit = input.Split(' ');
 
@@ -34,7 +34,7 @@ namespace AdventOfCode2021
     {
         private readonly Instruction[] _instructions;
 
-        public Day2() : base("day2.txt")
+        public Day2()
         {
             _instructions = LinesStrings.Select(line => new Instruction(line)).ToArray();
         }
@@ -48,17 +48,17 @@ namespace AdventOfCode2021
             {
                 switch (instruction.Direction)
                 {
-                    case DIRECTION.FORWARD:
+                    case Direction.Forward:
                     {
                         position += instruction.Value;
                         break;
                     }
-                    case DIRECTION.UP:
+                    case Direction.Up:
                     {
                         depth -= instruction.Value;
                         break;
                     }
-                    case DIRECTION.DOWN:
+                    case Direction.Down:
                     {
                         depth += instruction.Value;
                         break;
@@ -79,18 +79,18 @@ namespace AdventOfCode2021
             {
                 switch (instruction.Direction)
                 {
-                    case DIRECTION.FORWARD:
+                    case Direction.Forward:
                     {
                         position += instruction.Value;
                         depth += aim * instruction.Value;
                         break;
                     }
-                    case DIRECTION.UP:
+                    case Direction.Up:
                     {
                         aim -= instruction.Value;
                         break;
                     }
-                    case DIRECTION.DOWN:
+                    case Direction.Down:
                     {
                         aim += instruction.Value;
                         break;

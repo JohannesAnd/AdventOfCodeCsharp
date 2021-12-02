@@ -4,10 +4,6 @@ namespace AdventOfCode2021
 {
     public class Day1 : Day
     {
-        public Day1() : base("day1.txt")
-        {
-        }
-
         public int Part1()
         {
             return Solve(1);

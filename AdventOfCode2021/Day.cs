@@ -11,9 +11,9 @@ namespace AdventOfCode2021
         protected int[] LinesInts => LinesStrings.Select(int.Parse).ToArray();
 
 
-        protected Day(string filename)
+        protected Day()
         {
-            var path = Path.Combine(Environment.CurrentDirectory, "..", "..", "..", "Input", filename);
+            var path = Path.Combine(Environment.CurrentDirectory, "..", "..", "..", "Input", $"{GetType().Name}.txt");
             LinesStrings = File.ReadAllLines(path);
         }
     }
