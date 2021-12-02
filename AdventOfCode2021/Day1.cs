@@ -4,6 +4,10 @@ namespace AdventOfCode2021
 {
     public class Day1 : Day
     {
+        public Day1() : base("day1.txt")
+        {
+        }
+
         public int Part1()
         {
             return Solve(1);
@@ -16,10 +20,10 @@ namespace AdventOfCode2021
 
         private int Solve(int n)
         {
-            var length = linesInts.Length - n;
-            
-            var values = Enumerable.Range(0,  length + 1)
-                .Select((index) => linesInts.Skip(index).Take(n).Sum())
+            var length = LinesInts.Length - n;
+
+            var values = Enumerable.Range(0, length + 1)
+                .Select((index) => LinesInts.Skip(index).Take(n).Sum())
                 .ToArray();
 
             return Enumerable.Range(1, length)

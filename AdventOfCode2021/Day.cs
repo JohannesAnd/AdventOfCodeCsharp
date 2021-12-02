@@ -6,17 +6,15 @@ namespace AdventOfCode2021
 {
     public class Day
     {
-        protected readonly string[] linesStrings;
-        protected readonly int[] linesInts;
+        protected readonly string[] LinesStrings;
 
-        protected Day()
+        protected int[] LinesInts => LinesStrings.Select(int.Parse).ToArray();
+
+
+        protected Day(string filename)
         {
-            var path = Path.Combine(Environment.CurrentDirectory, "..", "..", "..", "Input", "day1.txt");
-            
-
-            linesStrings = File.ReadAllLines(path);
-            linesInts = File.ReadAllLines(path).Select(int.Parse).ToArray();
-
+            var path = Path.Combine(Environment.CurrentDirectory, "..", "..", "..", "Input", filename);
+            LinesStrings = File.ReadAllLines(path);
         }
     }
 }

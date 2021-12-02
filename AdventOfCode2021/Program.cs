@@ -6,10 +6,10 @@ namespace AdventOfCode2021
     {
         static void Main(string[] args)
         {
-            var day1 = new Day1();
+            var day = new Day2();
 
-            Console.WriteLine(day1.Part1());
-            Console.WriteLine(day1.Part2());
+            Console.WriteLine(day.Part1());
+            Console.WriteLine(day.Part2());
         }
     }
 }
