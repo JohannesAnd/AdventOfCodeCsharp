@@ -11,19 +11,19 @@ public class Day3 : Day
             .ToArray();
     }
 
-    private int[] GetCount(int[][] input, int larger, int smaller)
+    private int[] GetCount(IReadOnlyCollection<int[]> input, int larger, int smaller)
     {
         return input.Aggregate(GetEmpty(), (line1, line2) => line1.Zip(line2, (a, b) => a + b).ToArray())
             .Select(num =>
             {
-                if (num * 2 == input.Length) return -1;
+                if (num * 2 == input.Count) return -1;
 
-                return num > input.Length / 2 ? larger : smaller;
+                return num > input.Count / 2 ? larger : smaller;
             })
             .ToArray();
     }
 
-    private static int ArrayToInt(int[] strings)
+    private static int ArrayToInt(IEnumerable<int> strings)
     {
         return Convert.ToInt16(string.Join("", strings), 2);
     }
@@ -31,6 +31,23 @@ public class Day3 : Day
     private IEnumerable<int> GetEmpty()
     {
         return Enumerable.Range(0, LinesStrings[0].Length).Select(_ => 0);
+    }
+
+    private int Find(int larger, int smaller, int tieBreak)
+    {
+        var result = _bits.ToArray();
+
+        for (var i = 0; i < _bits[0].Length && result.Length > 1; i++)
+        {
+            var count = GetCount(result, larger, smaller);
+            var isEven = count[i] == -1;
+
+            result = result
+                .Where(line => isEven && line[i] == tieBreak || !isEven && count[i] == line[i])
+                .ToArray();
+        }
+
+        return ArrayToInt(result[0]);
     }
 
     public int Part1()
@@ -41,46 +58,11 @@ public class Day3 : Day
         return gammaRate * epsilonRate;
     }
 
-    private int[] FindOxygen()
-    {
-        var result = _bits.ToArray();
-
-        for (var i = 0; i < _bits[0].Length && result.Length > 1; i++)
-        {
-            var mostCommon = GetCount(result, 1, 0);
-
-            var isEven = mostCommon[i] == -1;
-
-            result = result
-                .Where(line => isEven && line[i] == 1 || !isEven && mostCommon[i] == line[i])
-                .ToArray();
-        }
-
-        return result[0];
-    }
-
-    private int[] FindCo2()
-    {
-        var result = _bits.ToArray();
-
-        for (var i = 0; i < _bits[0].Length && result.Length > 1; i++)
-        {
-            var leastCommon = GetCount(result, 0, 1);
-
-            var isEven = leastCommon[i] == -1;
-
-            result = result
-                .Where(line => isEven && line[i] == 0 || !isEven && leastCommon[i] == line[i])
-                .ToArray();
-        }
-
-        return result[0];
-    }
 
     public int Part2()
     {
-        var oxygen = ArrayToInt(FindOxygen());
-        var co2 = ArrayToInt(FindCo2());
+        var oxygen = Find(1, 0, 1);
+        var co2 = Find(0, 1, 0);
 
         return oxygen * co2;
     }
