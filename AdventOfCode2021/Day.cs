@@ -11,7 +11,7 @@ public class Day
 
     protected Day()
     {
-        var path = Path.Combine(Environment.CurrentDirectory, "..", "..", "..", "Input", $"{GetType().Name}.txt");
+        var path = Path.Combine(Environment.CurrentDirectory, "Input", $"{GetType().Name}.txt");
         LinesStrings = File.ReadAllLines(path);
     }
 }
