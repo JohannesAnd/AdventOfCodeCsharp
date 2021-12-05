@@ -14,16 +14,16 @@ public class Instruction
 
     public Instruction(string input)
     {
-        var map = new Dictionary<string, Direction>
-        {
-            { "forward", Direction.Forward },
-            { "up", Direction.Up },
-            { "down", Direction.Down }
-        };
         var inputSplit = input.Split(' ');
 
-        Direction = map[inputSplit[0]];
         Value = int.Parse(inputSplit[1]);
+        Direction = inputSplit[0] switch
+        {
+            "forward" => Direction.Forward,
+            "up" => Direction.Up,
+            "down" => Direction.Down,
+            _ => throw new ArgumentException("Invalid direction")
+        };
     }
 }
 
@@ -43,24 +43,15 @@ public class Day2 : Day
 
         foreach (var instruction in _instructions)
         {
-            switch (instruction.Direction)
+            Action handler = instruction.Direction switch
             {
-                case Direction.Forward:
-                {
-                    position += instruction.Value;
-                    break;
-                }
-                case Direction.Up:
-                {
-                    depth -= instruction.Value;
-                    break;
-                }
-                case Direction.Down:
-                {
-                    depth += instruction.Value;
-                    break;
-                }
-            }
+                Direction.Forward => () => position += instruction.Value,
+                Direction.Up => () => depth -= instruction.Value,
+                Direction.Down => () => depth += instruction.Value,
+                _ => () => { }
+            };
+
+            handler();
         }
 
         return position * depth;
@@ -74,25 +65,19 @@ public class Day2 : Day
 
         foreach (var instruction in _instructions)
         {
-            switch (instruction.Direction)
+            Action handler = instruction.Direction switch
             {
-                case Direction.Forward:
+                Direction.Forward => () =>
                 {
                     position += instruction.Value;
                     depth += aim * instruction.Value;
-                    break;
-                }
-                case Direction.Up:
-                {
-                    aim -= instruction.Value;
-                    break;
-                }
-                case Direction.Down:
-                {
-                    aim += instruction.Value;
-                    break;
-                }
-            }
+                },
+                Direction.Up => () => aim -= instruction.Value,
+                Direction.Down => () => aim += instruction.Value,
+                _ => () => { }
+            };
+
+            handler();
         }
 
         return position * depth;
