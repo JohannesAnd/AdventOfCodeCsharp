@@ -50,35 +50,34 @@ public class Board
         return null;
     }
 
-    private bool CheckIfWon()
+    private void CheckIfWon()
     {
-        var hasWon = _crossedOf
+        _hasWon = _crossedOf
             .Select((_, index) => _crossedOf
                 .Select(row => row[index])
                 .ToList())
             .Concat(_crossedOf)
             .Any(column => column
                 .All(val => val));
-
-        _hasWon = hasWon;
-
-        return _hasWon;
     }
 
-    public bool CrossOfNumber(int number)
+    public void CrossOfNumber(int number)
     {
-        if (_hasWon) return true;
+        if (_hasWon) return;
 
         NumberOfGuesses++;
 
         var coordinate = FindNumber(number);
 
-        if (!coordinate.HasValue) return false;
-        
+        if (!coordinate.HasValue) return;
+
         _crossedOf[coordinate.Value.Y][coordinate.Value.X] = true;
         _crossedNumbers.Add(number);
 
-        return _crossedNumbers.Count >= 5 && CheckIfWon();
+        if (_crossedNumbers.Count >= 5)
+        {
+            CheckIfWon();
+        }
     }
 
     public int GetScore()
@@ -94,12 +93,11 @@ public class Board
 
 public class Day4 : Day
 {
-    private readonly List<int> _instructions;
     private readonly List<Board> _boards;
-
+    
     public Day4()
     {
-        _instructions = LinesStrings[0].Split(',').Select(int.Parse).ToList();
+        var instructions = LinesStrings[0].Split(',').Select(int.Parse).ToList();
         _boards = Enumerable
             .Range(0, (LinesStrings.Length - 1) / 6)
             .Select(index => new Board(
@@ -108,47 +106,25 @@ public class Day4 : Day
                     .Take(5)
                     .ToArray()))
             .ToList();
-    }
 
-    private Board PlayBoards()
-    {
-        foreach (var number in _instructions)
-        {
-            foreach (var board in _boards)
-            {
-                var hasWon = board.CrossOfNumber(number);
-                
-                if (hasWon) return board;
-            }
-        }
-
-        return null;
-    }
-    
-    private void PlayAllBoards()
-    {
-        foreach (var number in _instructions)
+        foreach (var number in instructions)
         {
             foreach (var board in _boards)
             {
                 board.CrossOfNumber(number);
             }
         }
+
+        _boards = _boards.OrderBy(board => board.NumberOfGuesses).ToList();
     }
 
     public int Part1()
     {
-        var winner = PlayBoards();
-        
-        return winner.GetScore();
+        return _boards.First().GetScore();
     }
 
     public int Part2()
     {
-        PlayAllBoards();
-
-        var lastToWin = _boards.OrderBy(board => board.NumberOfGuesses).Last();
-
-        return lastToWin.GetScore();
+        return _boards.Last().GetScore();
     }
 }
