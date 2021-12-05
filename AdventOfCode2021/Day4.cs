@@ -16,7 +16,7 @@ public class Board
 {
     private readonly List<List<int>> _board;
     private readonly List<List<bool>> _crossedOf;
-    private List<int> _crossedNumbers = new();
+    private readonly List<int> _crossedNumbers = new();
     public int NumberOfGuesses;
     private bool _hasWon;
 
