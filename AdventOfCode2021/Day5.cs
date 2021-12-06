@@ -34,13 +34,11 @@ public class Line
 
 public class Day5 : Day
 {
-    private readonly Line[] _lines;
+    private readonly IEnumerable<Line> _lines;
 
     public Day5()
     {
-        _lines = LinesStrings
-            .Select(line => new Line(line))
-            .ToArray();
+        _lines = LinesStrings.Select(line => new Line(line));
     }
 
     public int Part1()
