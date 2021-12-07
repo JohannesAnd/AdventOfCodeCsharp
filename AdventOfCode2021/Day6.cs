@@ -7,7 +7,7 @@ public class Day6 : Day
     public Day6()
     {
         var state = new List<long> { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-        
+
         foreach (var age in LinesStrings[0].Split(',').Select(int.Parse).GroupBy(val => val))
         {
             state[age.Key] = age.Count();
@@ -19,13 +19,10 @@ public class Day6 : Day
     private long RunNIterations(int n)
     {
         var state = _startingPopulation.ToList();
-        
-        for (var _ = 0; _ < n; _++)
-        {
-            var haveBabies = state.First();
 
-            state = state.Skip(1).Take(8).Concat(state.Take(1)).ToList();
-            state[6] += haveBabies;
+        for (var i = 0; i < n; i++)
+        {
+            state[(i + 7) % 9] += state[i % 9];
         }
 
         return state.Sum();
@@ -33,7 +30,7 @@ public class Day6 : Day
 
     public long Part1()
     {
-       return RunNIterations(80);
+        return RunNIterations(80);
     }
 
     public long Part2()
