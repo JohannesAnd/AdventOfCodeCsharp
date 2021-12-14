@@ -14,13 +14,10 @@ public class Day1 : Day
 
     private int Solve(int n)
     {
-        var length = LinesInts.Length - n;
-
-        var values = Enumerable.Range(0, length + 1)
-            .Select((index) => LinesInts.Skip(index).Take(n).Sum())
-            .ToArray();
-
-        return Enumerable.Range(1, length)
-            .Count((index) => values[index] > values[index - 1]);
+        return LinesInts
+            .Window(n)
+            .Select(values => values.Sum())
+            .Window(2)
+            .Count(values => values[1] > values[0]);
     }
 }
