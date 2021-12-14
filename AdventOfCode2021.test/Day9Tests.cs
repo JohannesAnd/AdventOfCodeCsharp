@@ -15,6 +15,6 @@ public class Day9Tests
     [Test]
     public void Part2()
     {
-        Assert.AreEqual(-1, _day.Part2());
+        Assert.AreEqual(1019494, _day.Part2());
     }
 }
