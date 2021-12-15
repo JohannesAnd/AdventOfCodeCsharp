@@ -9,12 +9,12 @@ public class Day15Tests
     [Test]
     public void Part1()
     {
-        Assert.AreEqual(2170, _day.Part1());
+        Assert.AreEqual(595, _day.Part1());
     }
 
     [Test]
     public void Part2()
     {
-        Assert.AreEqual(2422444761283, _day.Part2());
+        Assert.AreEqual(2914, _day.Part2());
     }
 }

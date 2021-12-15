@@ -40,7 +40,8 @@ public class Day15 : Day
             .Range(0, 5 * LinesStrings[0].Length)
             .Select(xIndex =>
                 new Node(
-                    (xIndex/LinesStrings[0].Length + yIndex/LinesStrings.Length + GetValue(xIndex, yIndex) - 1) % 9 + 1,
+                    (xIndex / LinesStrings[0].Length + yIndex / LinesStrings.Length + GetValue(xIndex, yIndex) - 1) %
+                    9 + 1,
                     xIndex,
                     yIndex)
             ).ToArray()
@@ -80,6 +81,7 @@ public class Day15 : Day
     private static int GetShortestPath(Node[][] map)
     {
         var visited = new HashSet<Node>();
+        var newlyChanged = new HashSet<Node>();
         var unvisited = new HashSet<Node>(map.SelectMany(n => n));
         var distances = map
             .Select(row => row
@@ -91,23 +93,29 @@ public class Day15 : Day
 
         do
         {
-            var node = unvisited.OrderBy(n => distances[n.Y][n.X]).First();
+            var node = (newlyChanged.Count > 0 ? newlyChanged : unvisited).OrderBy(n => distances[n.Y][n.X])
+                .First();
             var neighbors = GetNeighbors(map, node.X, node.Y)
                 .Where(n => !visited.Contains(n));
 
             foreach (var neighbor in neighbors)
             {
                 var newDistance = distances[node.Y][node.X] + neighbor.Value;
+                var currentDistance = distances[neighbor.Y][neighbor.X];
 
-                distances[neighbor.Y][neighbor.X] =
-                    Math.Min(distances[neighbor.Y][neighbor.X], newDistance);
+                if (newDistance < currentDistance)
+                {
+                    distances[neighbor.Y][neighbor.X] = newDistance;
+
+                    if (!newlyChanged.Contains(neighbor)) newlyChanged.Add(neighbor);
+                }
             }
 
             visited.Add(node);
             unvisited.Remove(node);
+            if (newlyChanged.Contains(node)) newlyChanged.Remove(node);
 
             if (node.IsLast) return distances[node.Y][node.X];
-            if (unvisited.Count % 1000 == 0) Console.WriteLine(unvisited.Count);
         } while (unvisited.Count > 0);
 
         return -1;
@@ -120,8 +128,6 @@ public class Day15 : Day
 
     public long Part2()
     {
-       // Console.Write(string.Join('\n', _bigMap.Select(row => new string(row.SelectMany(n => n.Value.ToString().ToCharArray()).ToArray()))));
-
         return GetShortestPath(_bigMap);
     }
 }
