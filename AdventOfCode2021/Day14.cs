@@ -5,8 +5,7 @@ class Polymer
     private readonly char[] _polymer;
     private readonly Dictionary<string, char[]> _rules = new();
     private readonly Dictionary<string, Dictionary<char, long>> _cache = new();
-
-
+    
     public Polymer(string[] input)
     {
         _polymer = input[0].ToCharArray();
@@ -20,6 +19,18 @@ class Polymer
         }
     }
 
+    private static void AddToDictionary(Dictionary<char, long> source, char key, long value)
+    {
+        if (source.ContainsKey(key))
+        {
+            source[key] += value;
+        }
+        else
+        {
+            source.Add(key, value);
+        }
+    }
+
     private static Dictionary<char, long> MergeDictionaries(IEnumerable<Dictionary<char, long>> toMerge)
     {
         var result = new Dictionary<char, long>();
@@ -28,14 +39,7 @@ class Polymer
         {
             foreach (var (key, value) in dict)
             {
-                if (result.ContainsKey(key))
-                {
-                    result[key] += value;
-                }
-                else
-                {
-                    result.Add(key, value);
-                }
+                AddToDictionary(result, key, value);
             }
         }
 
@@ -46,44 +50,13 @@ class Polymer
     {
         var expanded = _polymer
             .Window(2)
-            .Select(pair =>
-            {
-                var expansion = GrowRecursive(pair, n);
-
-                return new
-                {
-                    pair,
-                    expansion
-                };
-            })
+            .Select(pair => GrowRecursive(pair, n))
             .ToArray();
 
-        var result = new Dictionary<char, long>();
-
-        foreach (var exp in expanded)
-        {
-            foreach (var (key, value) in exp.expansion)
-            {
-                if (result.ContainsKey(key))
-                {
-                    result[key] += value;
-                }
-                else
-                {
-                    result.Add(key, value);
-                }
-            }
-        }
+        var result = MergeDictionaries(expanded);
 
         // Add missing last character
-        if (result.ContainsKey(_polymer.Last()))
-        {
-            result[_polymer.Last()] += 1;
-        }
-        else
-        {
-            result.Add(_polymer.Last(), 1);
-        }
+        AddToDictionary(result, _polymer.Last(), 1);
 
         return result;
     }
@@ -92,52 +65,20 @@ class Polymer
     {
         var input = new string(array.ToArray());
 
-        if (n == 0)
-        {
-            return new Dictionary<char, long> { { array[0], 1 } };
-        }
+        if (n == 0) return new Dictionary<char, long> { { array[0], 1 } };
 
         var cacheKey = $"{n}{input}";
 
-        if (_cache.ContainsKey(cacheKey))
-        {
-            return _cache[cacheKey];
-        }
+        if (_cache.ContainsKey(cacheKey)) return _cache[cacheKey];
 
-        var newPolymer = _rules[input];
+        var result = MergeDictionaries(
+            _rules[input]
+                .Window(2)
+                .Select(pair => GrowRecursive(pair, n - 1))
+        );
 
-        var expanded = newPolymer
-            .Window(2)
-            .Select(pair => new
-                {
-                    pair,
-                    expansion = GrowRecursive(pair, n - 1)
-                }
-            )
-            .ToArray();
-
-        var result = new Dictionary<char, long>();
-
-        foreach (var exp in expanded)
-        {
-            foreach (var (key, value) in exp.expansion)
-            {
-                if (result.ContainsKey(key))
-                {
-                    result[key] += value;
-                }
-                else
-                {
-                    result.Add(key, value);
-                }
-            }
-        }
-
-        if (!_cache.ContainsKey(cacheKey))
-        {
-            _cache.Add(cacheKey, result);
-        }
-
+        if (!_cache.ContainsKey(cacheKey)) _cache.Add(cacheKey, result);
+        
         return result;
     }
 }
