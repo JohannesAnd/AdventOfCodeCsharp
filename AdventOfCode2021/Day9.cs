@@ -14,7 +14,7 @@ public class Point
     }
 }
 
-public class Day9 : Day
+public class Day9 : Day, Parts
 {
     private readonly Point[][] _map;
     private IEnumerable<Point> _lowPoints;
@@ -86,14 +86,14 @@ public class Day9 : Day
         return GetLowPoints().Select(GetBasinSize);
     }
 
-    public long Part1()
+    public object Part1()
     {
         return GetLowPoints()
             .Select(point => point.Value + 1)
             .Sum();
     }
 
-    public long Part2()
+    public object Part2()
     {
         var largestBasins = GetBasinSizes().OrderBy(s => s).Reverse().ToArray();
 

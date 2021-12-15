@@ -20,7 +20,7 @@ public class Node
     }
 }
 
-public class Day15 : Day
+public class Day15 : Day, Parts
 {
     private readonly Node[][] _map;
     private readonly Node[][] _bigMap;
@@ -121,12 +121,12 @@ public class Day15 : Day
         return -1;
     }
 
-    public long Part1()
+    public object Part1()
     {
         return GetShortestPath(_map);
     }
 
-    public long Part2()
+    public object Part2()
     {
         return GetShortestPath(_bigMap);
     }

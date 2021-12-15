@@ -24,7 +24,7 @@ public class Cave
     }
 }
 
-public class Day12 : Day
+public class Day12 : Day, Parts
 {
     private Cave CreateCaveSystem()
     {
@@ -77,12 +77,12 @@ public class Day12 : Day
             .ToArray();
     }
 
-    public long Part1()
+    public object Part1()
     {
         return GetPaths(CreateCaveSystem()).Length;
     }
 
-    public long Part2()
+    public object Part2()
     {
         return GetPathsWithDoubleSmall(CreateCaveSystem()).Length;
     }

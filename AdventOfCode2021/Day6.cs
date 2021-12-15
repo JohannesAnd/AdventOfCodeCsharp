@@ -1,6 +1,6 @@
 namespace AdventOfCode2021;
 
-public class Day6 : Day
+public class Day6 : Day, Parts
 {
     private readonly IEnumerable<long> _startingPopulation;
 
@@ -28,12 +28,12 @@ public class Day6 : Day
         return state.Sum();
     }
 
-    public long Part1()
+    public object Part1()
     {
         return RunNIterations(80);
     }
 
-    public long Part2()
+    public object Part2()
     {
         return RunNIterations(256);
     }

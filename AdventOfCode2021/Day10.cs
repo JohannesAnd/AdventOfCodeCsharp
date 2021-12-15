@@ -96,7 +96,7 @@ public class SymbolLine
     }
 }
 
-public class Day10 : Day
+public class Day10 : Day, Parts
 {
     private readonly IEnumerable<SymbolLine> _lines;
 
@@ -105,7 +105,7 @@ public class Day10 : Day
         _lines = LinesStrings.Select(l => new SymbolLine(l));
     }
 
-    public long Part1()
+    public object Part1()
     {
         return _lines
             .Where(l => l.IsCorrupted)
@@ -113,7 +113,7 @@ public class Day10 : Day
             .Sum();
     }
 
-    public long Part2()
+    public object Part2()
     {
         var scores = _lines
             .Where(l => l.IsIncomplete)

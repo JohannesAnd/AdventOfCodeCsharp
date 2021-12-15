@@ -91,7 +91,7 @@ public class Board
     }
 }
 
-public class Day4 : Day
+public class Day4 : Day, Parts
 {
     private readonly List<Board> _boards;
     
@@ -118,12 +118,12 @@ public class Day4 : Day
         _boards = _boards.OrderBy(board => board.NumberOfGuesses).ToList();
     }
 
-    public int Part1()
+    public object Part1()
     {
         return _boards.First().GetScore();
     }
 
-    public int Part2()
+    public object Part2()
     {
         return _boards.Last().GetScore();
     }

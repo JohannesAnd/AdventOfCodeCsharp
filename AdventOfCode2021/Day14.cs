@@ -83,7 +83,7 @@ class Polymer
     }
 }
 
-public class Day14 : Day
+public class Day14 : Day, Parts
 {
     private long ComputeValue(int n)
     {
@@ -96,12 +96,12 @@ public class Day14 : Day
         return values.Last() - values.First();
     }
 
-    public long Part1()
+    public object Part1()
     {
         return ComputeValue(10);
     }
 
-    public long Part2()
+    public object Part2()
     {
         return ComputeValue(40);
     }

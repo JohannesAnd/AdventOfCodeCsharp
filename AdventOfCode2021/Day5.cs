@@ -32,7 +32,7 @@ public class Line
     }
 }
 
-public class Day5 : Day
+public class Day5 : Day, Parts
 {
     private readonly IEnumerable<Line> _lines;
 
@@ -41,7 +41,7 @@ public class Day5 : Day
         _lines = LinesStrings.Select(line => new Line(line));
     }
 
-    public int Part1()
+    public object Part1()
     {
         return _lines
             .Where(line => !line.IsDiagonal)
@@ -50,7 +50,7 @@ public class Day5 : Day
             .Count(grouping => grouping.Count() > 1);
     }
 
-    public int Part2()
+    public object Part2()
     {
         return _lines
             .SelectMany(line => line.GetPoints())

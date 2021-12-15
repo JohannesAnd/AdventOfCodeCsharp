@@ -1,6 +1,6 @@
 namespace AdventOfCode2021;
 
-public class Day7 : Day
+public class Day7 : Day, Parts
 {
     private readonly int[] _numbers;
     private readonly int _median;
@@ -32,12 +32,12 @@ public class Day7 : Day
             .Sum();
     }
 
-    public long Part1()
+    public object Part1()
     {
         return GetLinearCost(_median);
     }
 
-    public long Part2()
+    public object Part2()
     {
         return  GetQuadraticCost(_average);
     }

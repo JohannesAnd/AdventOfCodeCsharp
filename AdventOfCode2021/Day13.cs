@@ -98,9 +98,9 @@ public class Origami
     }
 }
 
-public class Day13 : Day
+public class Day13 : Day, Parts
 {
-    public int Part1()
+    public object Part1()
     {
         var origami = new Origami(LinesStrings);
 
@@ -109,14 +109,12 @@ public class Day13 : Day
         return origami.GetUniquePoints();
     }
 
-    public string Part2()
+    public object Part2()
     {
         var origami = new Origami(LinesStrings);
 
         origami.Fold(int.MaxValue);
-
-        Console.WriteLine(origami.Print());
-
+        
         return origami.Print();
     }
 }

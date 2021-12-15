@@ -27,7 +27,7 @@ public class Instruction
     }
 }
 
-public class Day2 : Day
+public class Day2 : Day, Parts
 {
     private readonly Instruction[] _instructions;
 
@@ -36,7 +36,7 @@ public class Day2 : Day
         _instructions = LinesStrings.Select(line => new Instruction(line)).ToArray();
     }
 
-    public int Part1()
+    public object Part1()
     {
         var position = 0;
         var depth = 0;
@@ -57,7 +57,7 @@ public class Day2 : Day
         return position * depth;
     }
 
-    public int Part2()
+    public object Part2()
     {
         var position = 0;
         var depth = 0;

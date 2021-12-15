@@ -1,13 +1,13 @@
 namespace AdventOfCode2021;
 
-public class Day1 : Day
+public class Day1 : Day, Parts
 {
-    public int Part1()
+    public object Part1()
     {
         return Solve(1);
     }
 
-    public int Part2()
+    public object Part2()
     {
         return Solve(3);
     }

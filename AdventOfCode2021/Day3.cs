@@ -1,6 +1,6 @@
 namespace AdventOfCode2021;
 
-public class Day3 : Day
+public class Day3 : Day, Parts
 {
     private readonly int[][] _bits;
 
@@ -50,7 +50,7 @@ public class Day3 : Day
         return ArrayToInt(result[0]);
     }
 
-    public int Part1()
+    public object Part1()
     {
         var gammaRate = ArrayToInt(GetCount(_bits, 1, 0));
         var epsilonRate = ArrayToInt(GetCount(_bits, 0, 1));
@@ -59,7 +59,7 @@ public class Day3 : Day
     }
 
 
-    public int Part2()
+    public object Part2()
     {
         var oxygen = Find(1, 0, 1);
         var co2 = Find(0, 1, 0);

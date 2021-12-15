@@ -134,7 +134,7 @@ public class OctopusBoard
     }
 }
 
-public class Day11 : Day
+public class Day11 : Day, Parts
 {
     private readonly Octopus[][] _grid;
 
@@ -150,12 +150,12 @@ public class Day11 : Day
         return new OctopusBoard(grid);
     }
 
-    public long Part1()
+    public object Part1()
     {
         return CreateOctopusBoard().GetFlashCountAfterNSteps(100);
     }
 
-    public long Part2()
+    public object Part2()
     {
         return CreateOctopusBoard().FindFirstSynchronousFlash();
     }

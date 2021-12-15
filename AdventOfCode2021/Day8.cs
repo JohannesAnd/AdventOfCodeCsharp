@@ -72,7 +72,7 @@ public class Display
     }
 }
 
-public class Day8 : Day
+public class Day8 : Day, Parts
 {
     private readonly Display[] _displays;
 
@@ -83,12 +83,12 @@ public class Day8 : Day
             .ToArray();
     }
 
-    public long Part1()
+    public object Part1()
     {
         return _displays.Select(d => d.GetCountOf1478()).Sum();
     }
 
-    public long Part2()
+    public object Part2()
     {
         return _displays.Select(d => d.GetValue()).Sum();
     }
