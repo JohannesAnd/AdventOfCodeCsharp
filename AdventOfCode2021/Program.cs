@@ -8,8 +8,8 @@ class Program
 {
     static void Main()
     {
-        var day = new Day12();
+        var day = new Day14();
 
-        day.Part2();
+        Console.WriteLine(day.Part1());
     }
 }
