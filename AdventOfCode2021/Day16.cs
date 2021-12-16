@@ -27,7 +27,7 @@ public class Packet
         return _typeId switch
         {
             0 => _subPackets.Select(sp => sp.ComputeExpression()).Sum(),
-            1 => _subPackets.Select(sp => sp.ComputeExpression()).Aggregate(1, (long acc, long val) => acc * val),
+            1 => _subPackets.Select(sp => sp.ComputeExpression()).Product(),
             2 => _subPackets.Select(sp => sp.ComputeExpression()).Min(),
             3 => _subPackets.Select(sp => sp.ComputeExpression()).Max(),
             4 => _value,
@@ -59,7 +59,7 @@ public class Day16 : Day, Parts
         return Convert.ToInt64(new string(input.ToArray()), 2);
     }
 
-    private Packet GetPacket(int index)
+    private Packet GetPacket(int index = 0)
     {
         var version = CharArrayToNumber(_input.Skip(index).Take(3));
         var typeId = CharArrayToNumber(_input.Skip(index + 3).Take(3));
@@ -133,15 +133,11 @@ public class Day16 : Day, Parts
 
     public object Part1()
     {
-        var packet = GetPacket(0);
-
-        return packet.GetPacketVersionSum();
+        return GetPacket().GetPacketVersionSum();
     }
 
     public object Part2()
     {
-        var packet = GetPacket(0);
-
-        return packet.ComputeExpression();
+        return  GetPacket().ComputeExpression();
     }
 }

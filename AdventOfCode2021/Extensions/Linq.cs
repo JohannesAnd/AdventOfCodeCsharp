@@ -38,6 +38,21 @@ namespace AdventOfCode2021
                 yield return window;
             }
         }
+        public static long Product(this IEnumerable<long> source)
+        {
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            
+            long product = 1;
+            checked
+            {
+                foreach (long v in source)
+                {
+                    product *= v;
+                }
+            }
+
+            return product;
+        }
 
     }
 }
