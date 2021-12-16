@@ -15,6 +15,6 @@ public class Day16Tests
     [Test]
     public void Part2()
     {
-        Assert.AreEqual(-1, _day.Part2());
+        Assert.AreEqual(539051801941, _day.Part2());
     }
 }

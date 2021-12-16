@@ -26,14 +26,15 @@ class Program
         var day13 = new Day13();
         var day14 = new Day14();
         var day15 = new Day15();
+        var day16 = new Day16();
 
         var days = new Parts[]
-            { day1, day2, day3, day4, day5, day6, day7, day8, day9, day10, day11, day12, day13, day14, day15 };
+            { day1, day2, day3, day4, day5, day6, day7, day8, day9, day10, day11, day12, day13, day14, day15, day16 };
 
         var task = "Task".PadRight(13);
         var result = "Result".PadLeft(20);
         var time = "Time in ms".PadLeft(10);
-        
+
         Console.WriteLine($"{task} | {result} | {time}");
         Console.WriteLine("---------------------------------------------------");
         foreach (var day in days)
@@ -62,7 +63,7 @@ class Program
 
             var part1String = $"{dayString}: Part 1".PadRight(10);
             var part2String = $"{dayString}: Part 2".PadRight(10);
-            
+
             var part1TimeString = part1Time.ToString().PadLeft(10);
             var part2TimeString = part2Time.ToString().PadLeft(10);
 
